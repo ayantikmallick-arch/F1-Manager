@@ -27,6 +27,7 @@ function emit(name, detail) {
 
 function errorMessage(error) {
   const messages = {
+    "auth/invalid-api-key": "Firebase rejected the API key. Check that VITE_FIREBASE_API_KEY matches the web app in Firebase Console, then redeploy.",
     "auth/email-already-in-use": "That email already has an account. Sign in instead.",
     "auth/invalid-email": "Enter a valid email address.",
     "auth/invalid-credential": "The email or password is incorrect.",
@@ -44,7 +45,7 @@ function errorMessage(error) {
 if (missingConfig.length) {
   emit("auth-config", {
     configured: false,
-    message: "Firebase sign-in is not configured. Add the required VITE_FIREBASE values to .env.local and restart the app."
+    message: `Firebase sign-in is missing ${missingConfig.join(", ")}. Add these VITE_FIREBASE variables in Vercel → Settings → Environment Variables, select the Production environment, then redeploy. Vite reads them when it builds the site.`
   });
   emit("auth-ready", {});
 } else {

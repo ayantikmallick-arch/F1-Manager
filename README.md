@@ -18,7 +18,13 @@ The welcome screen supports Google sign-in, email/password sign-in and account c
 3. Copy `.env.example` to `.env.local` and set the Firebase web app values. The provided `.env.local` is excluded from source control.
 4. Restart the Vite server after editing environment values.
 
-Firebase web configuration is delivered to the browser and is not a secret, even when supplied through a local environment file. Restrict the Firebase API key to the intended web origins in Google Cloud Console, and configure Firebase Authentication and any future database security rules in Firebase Console.
+### Deploying with Vercel
+
+In the Vercel project, open **Settings → Environment Variables** and add the five `VITE_FIREBASE_*` entries from `.env.example`, using the corresponding values from the Firebase web app configuration. Apply them to Production, Preview, and Development as needed, then redeploy so Vite can include them in the build. Vite replaces these variables at build time; adding them after a deployment does not update that deployment.
+
+In Firebase Console, enable Google and Email/Password sign-in and add the deployed Vercel hostname (for example, `your-project.vercel.app`) under **Authentication → Settings → Authorized domains**.
+
+Firebase web app configuration is public client configuration, not a way to hide credentials: values prefixed with `VITE_` are included in browser assets. Keep `.env.local` out of source control, restrict the Firebase API key to the intended websites in Google Cloud Console, and configure Firebase Authentication and any future database security rules in Firebase Console.
 
 Careers are stored in this browser's local storage under separate keys for guest play and each signed-in Firebase user. Sign-in currently does not synchronize career progress across devices.
 
